@@ -21,6 +21,9 @@ docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:l
 docker run --platform linux/386 -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:latest
 ```
 
+The `/etc/cups` directory is the directory used to store configuration files and related settings for CUPS.
+Choose to mount `/etc/cups` to the container so that the added printers will not be lost after the container is destroyed and restarted.
+
 ## CUPS web interface
 
 Login in to CUPS web interface on [https://127.0.0.1:631](https://127.0.0.1:631) and configure CUPS to your needs.
