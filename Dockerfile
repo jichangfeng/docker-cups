@@ -1,0 +1,60 @@
+FROM debian:buster-slim
+MAINTAINER Changfeng Ji <jichf@qq.com>
+
+# environment
+ENV ADMIN_PASSWORD=admin
+
+# install packages
+RUN apt-get update \
+&& apt-get install -y \
+  sudo \
+  whois \
+  inetutils-ping \
+  usbutils \
+  cups \
+  cups-client \
+  cups-bsd \
+  cups-filters \
+  foomatic-db-compressed-ppds \
+  printer-driver-all \
+  openprinting-ppds \
+  hpijs-ppds \
+  hp-ppd \
+  hplip \
+  smbclient \
+  printer-driver-cups-pdf \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
+
+RUN useradd \
+  --groups=sudo,lp,lpadmin \
+  --create-home \
+  --home-dir=/home/admin \
+  --shell=/bin/bash \
+  --password=$(mkpasswd $ADMIN_PASSWORD) \
+  admin \
+&& sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
+
+# enable access to CUPS
+RUN cp /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bak
+RUN /usr/sbin/cupsd \
+  && while [ ! -f /var/run/cups/cupsd.pid ]; do sleep 1; done \
+  && cupsctl --remote-admin --remote-any --share-printers \
+  && kill $(cat /var/run/cups/cupsd.pid)
+RUN echo "ServerAlias *" >> /etc/cups/cupsd.conf
+
+# copy /etc/cups for skeleton usage
+RUN cp -rp /etc/cups /etc/cups-skel
+
+# ports
+EXPOSE 631
+
+# volumes
+VOLUME ["/etc/cups"]
+
+# entrypoint
+ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT [ "docker-entrypoint.sh" ]
+
+# default command
+CMD ["cupsd", "-f"]
