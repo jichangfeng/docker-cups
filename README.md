@@ -8,6 +8,8 @@ Docker image including CUPS print server and printing drivers (installed from th
 
 - linux/amd64
 - linux/386
+- linux/arm64/v8
+- linux/arm/v7
 
 ## Run the Cups server
 
