@@ -4,23 +4,21 @@
 
 Docker image including CUPS print server and printing drivers (installed from the Debian packages).
 
-## Architectures
+## Images
 
-- linux/amd64
-- linux/386
-- linux/arm64/v8
-- linux/arm/v7
+- `docker pull jichangfeng/cups:ubuntu` OS/ARCH: linux/amd64, linux/arm64/v8, linux/arm/v7
+- `docker pull jichangfeng/cups:debian` OS/ARCH: linux/amd64, linux/arm64/v8, linux/arm/v7, linux/386
 
 ## Run the Cups server
 
 ```bash
 # Run the container
-docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:latest
+docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:ubuntu
 ```
 
 ```bash
 # Run the container with the specified architecture
-docker run --platform linux/386 -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:latest
+docker run --platform linux/arm64/v8 -d --restart always -p 631:631 -v $(pwd):/etc/cups jichangfeng/cups:ubuntu
 ```
 
 The `/etc/cups` directory is the directory used to store configuration files and related settings for CUPS.
@@ -34,7 +32,7 @@ Default credentials: admin / admin
 To change the admin password set the environment variable `ADMIN_PASSWORD` to your password.
 
 ```bash
-docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups -e ADMIN_PASSWORD=AnySecretPassword jichangfeng/cups:latest
+docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups -e ADMIN_PASSWORD=AnySecretPassword jichangfeng/cups:ubuntu
 ```
 
 ## Configure Cups client on your machine
