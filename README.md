@@ -43,7 +43,7 @@ docker run -d --restart always -p 631:631 -v $(pwd):/etc/cups -e ADMIN_PASSWORD=
 4. Test that printers are detected using `lpstat -v`
 5. Applications on your machine should now detect the printers!
 
-For more usage, refer to [Printer Sharing / Automatic Configuration using IPP](https://www.cups.org/doc/sharing.html#AUTO_IPP) 
+For more usage, refer to [Printer Sharing / Automatic Configuration using IPP](https://openprinting.github.io/cups/doc/sharing.html#AUTO_IPP) 
 
 ## Included package
 
