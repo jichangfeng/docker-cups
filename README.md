@@ -2,7 +2,7 @@
 
 ## Overview
 
-Docker image including CUPS print server and printing drivers (installed from the Debian packages).
+Docker image including CUPS print server and printing drivers (installed from the Ubuntu/Debian packages).
 
 ## Images
 
