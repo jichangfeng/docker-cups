@@ -24,6 +24,9 @@ docker run --platform linux/arm64/v8 -d --restart always -p 631:631 -v $(pwd):/e
 The `/etc/cups` directory is the directory used to store configuration files and related settings for CUPS.
 Choose to mount `/etc/cups` to the container so that the added printers will not be lost after the container is destroyed and restarted.
 
+In addition, the `/var/spool/cups` directory is used for storing temporary files, print jobs, and log information for CUPS.
+Choose to mount `/var/spool/cups` to the container ensures that any added print jobs will persist even if the container is destroyed and restarted.
+
 ## CUPS web interface
 
 Login in to CUPS web interface on [https://127.0.0.1:631](https://127.0.0.1:631) and configure CUPS to your needs.
